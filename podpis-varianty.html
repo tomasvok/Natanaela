@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="cs">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Varianty podpisu – Natanaela Prokešová</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Allison&family=Corinthia:wght@400&family=Ephesis&family=Great+Vibes&family=Monsieur+La+Doulaise&family=Mrs+Saint+Delafield&family=Ms+Madi&family=Pinyon+Script&family=Jost:wght@400;500&display=block">
+  <style>
+    /* Pomocná stránka: porovnání písem pro podpis. Na web nepatří. */
+    :root { --vino: #7B3A4A; --bg: #FAF6F1; --linka: #E6D8CE; --seda: #6C5F63; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); color: #2F2528; font: 400 1rem/1.6 "Jost", system-ui, sans-serif; }
+    header { max-width: 1160px; margin: 0 auto; padding: 3rem 1.25rem 1.5rem; }
+    h1 { font-weight: 500; font-size: 1.6rem; margin: 0 0 .4rem; }
+    header p { color: var(--seda); margin: 0 0 1.5rem; max-width: 46em; }
+    .ovladani { display: flex; flex-wrap: wrap; gap: 1rem 2rem; align-items: center; }
+    .ovladani label { display: flex; gap: .6rem; align-items: center; font-size: .9rem; }
+    .ovladani input[type="text"] { font: inherit; padding: .5rem .8rem; border: 1px solid var(--linka); border-radius: 10px; width: 16rem; }
+    .ovladani input[type="color"] { width: 2.4rem; height: 2rem; border: 0; background: none; }
+    main { max-width: 1160px; margin: 0 auto; padding: 0 1.25rem 4rem; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 540px), 1fr)); gap: 1.25rem; }
+    .varianta { background: #FFFDFA; border: 1px solid var(--linka); border-radius: 18px; padding: 1.2rem 1.4rem 1.6rem; overflow: hidden; }
+    .varianta h2 { font: 500 .75rem/1.4 "Jost", sans-serif; letter-spacing: .16em; text-transform: uppercase; color: var(--seda); margin: 0 0 .6rem; display: flex; justify-content: space-between; }
+    .podpis { color: var(--vino); font-size: var(--velikost, 60px); line-height: 1.25; white-space: nowrap; min-height: 1.4em; padding: .1em .2em; }
+    .monogram { display: inline-grid; place-items: center; width: 3.4rem; height: 3.4rem; border: 1px solid var(--linka); border-radius: 50%; color: var(--vino); font-size: 2.2rem; line-height: 1; margin-top: .6rem; padding-top: .3rem; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Varianty podpisu</h1>
+    <p>Stejný text v osmi ručně psaných písmech (všechna umí českou diakritiku a jsou zdarma k použití na webu). Vybrané písmo se pak nastaví v <code>styles.css</code> v proměnné <code>--podpis</code>.</p>
+    <div class="ovladani">
+      <label>Text <input type="text" id="text" value="Natanaela Prokešová"></label>
+      <label>Velikost <input type="range" id="velikost" min="36" max="110" value="60"></label>
+      <label>Barva <input type="color" id="barva" value="#7B3A4A"></label>
+    </div>
+  </header>
+
+  <main id="varianty"></main>
+
+  <script>
+    const pisma = [
+      ['Allison', 'aktuálně na webu'],
+      ['Mrs Saint Delafield', ''],
+      ['Ms Madi', ''],
+      ['Ephesis', ''],
+      ['Monsieur La Doulaise', ''],
+      ['Great Vibes', ''],
+      ['Pinyon Script', ''],
+      ['Corinthia', ''],
+    ];
+    const kontejner = document.getElementById('varianty');
+    pisma.forEach(([pismo, poznamka], i) => {
+      kontejner.insertAdjacentHTML('beforeend', `
+        <section class="varianta">
+          <h2><span>${i + 1}. ${pismo}</span><span>${poznamka}</span></h2>
+          <div class="podpis" style="font-family:'${pismo}', cursive"></div>
+          <span class="monogram" style="font-family:'${pismo}', cursive">NP</span>
+        </section>`);
+    });
+    const text = document.getElementById('text');
+    const vykresli = () => document.querySelectorAll('.podpis').forEach((p) => { p.textContent = text.value; });
+    text.addEventListener('input', vykresli);
+    document.getElementById('velikost').addEventListener('input', (e) => document.documentElement.style.setProperty('--velikost', e.target.value + 'px'));
+    document.getElementById('barva').addEventListener('input', (e) => document.documentElement.style.setProperty('--vino', e.target.value));
+    vykresli();
+  </script>
+</body>
+</html>

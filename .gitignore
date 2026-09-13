@@ -1,0 +1,7 @@
+# Originály fotek a podklady od klientky – na GitHub ani na server nepatří
+_podklady/
+
+# Systémové soubory
+Thumbs.db
+desktop.ini
+.DS_Store
